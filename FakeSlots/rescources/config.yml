@@ -1,0 +1,9 @@
+---
+### FakeSlots configuration file
+
+# This count is displayed on server list in MC:PE app or on Server List
+maxPlayers: '1'
+
+# This is number of maximum players on server
+maxOnlinePlayers: '100'
+...

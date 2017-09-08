@@ -1,0 +1,11 @@
+name: FakeSlots
+api: [3.0.0-ALPHA7]
+version: 1.0.0
+author: CzechPMDevs
+authors: [GamakCZ]
+main: FakeSlots\FakeSlots
+
+permissions:
+  fs.cmd:
+    default: op
+    descirption: FakeSlots command permissions
