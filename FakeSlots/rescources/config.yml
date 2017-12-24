@@ -1,6 +1,9 @@
 ---
 ### FakeSlots configuration file
 
+# This will change the number of slots regardless of the number in server.properties
+forceUpdate: 'false'
+
 # This count is displayed on server list in MC:PE app or on Server List
 maxPlayers: '1'
 

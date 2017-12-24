@@ -1,16 +1,15 @@
 <?php
 
-namespace FakeSlots;
+namespace fakeslots;
 
-use FakeSlots\Command\FakeSlotsCommand;
-use FakeSlots\Data\ConfigManager;
-use FakeSlots\Event\EventListener;
+use fakeslots\command\FakeSlotsCommand;
+use fakeslots\utils\ConfigManager;
+use fakeslots\event\EventListener;
 use pocketmine\plugin\PluginBase;
 
 /**
  * Class FakeSlots
- * @package FakeSlots
- * @author GamakCZ
+ * @package fakeslots
  */
 class FakeSlots extends PluginBase {
 
@@ -28,6 +27,14 @@ class FakeSlots extends PluginBase {
         $this->configManager = new ConfigManager($this);
         $this->getServer()->getPluginManager()->registerEvents($this->eventListener = new EventListener($this), $this);
         $this->getServer()->getCommandMap()->register("fakeslots", new FakeSlotsCommand);
+        $this->getLogger()->info("\n".
+            "§c--------------------------------\n".
+            "§6§lCzechPMDevs §r§e>>> §bFakeSlots\n".
+            "§o§9FakeSlots ported to pocketmine\n".
+            "§aAuthors: §7VixikCZ\n".
+            "§aVersion: §7".$this->getDescription()->getVersion()."\n".
+            "§aStatus: §7Loading...\n".
+            "§c--------------------------------");
     }
 
     /**

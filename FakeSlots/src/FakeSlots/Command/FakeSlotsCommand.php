@@ -1,8 +1,8 @@
 <?php
 
-namespace FakeSlots\Command;
+namespace fakeslots\command;
 
-use FakeSlots\FakeSlots;
+use fakeslots\FakeSlots;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
@@ -15,7 +15,7 @@ use pocketmine\plugin\Plugin;
 class FakeSlotsCommand extends Command implements PluginIdentifiableCommand {
 
     /** @var  FakeSlots $plugin */
-    public $plugin;
+    private $plugin;
 
     /**
      * FakeSlotsCommand constructor.
@@ -41,7 +41,7 @@ class FakeSlotsCommand extends Command implements PluginIdentifiableCommand {
             return;
         }
 
-        if(empty($args[0]) || empty(strval($args[1]))) {
+        if(empty($args[0]) || $args[0] != null) {
             $sender->sendMessage("§cUsage: §7/fs <mop|mp> <int: count>");
             return;
         }
@@ -50,12 +50,12 @@ class FakeSlotsCommand extends Command implements PluginIdentifiableCommand {
             case "mop":
             case "maxonlineplayers":
                 $this->plugin->configManager->setMaxOnlinePlayers(intval($args[1]));
-                $sender->sendMessage("§aSlots updated to {$args[1]}");
+                $sender->sendMessage("§aSlots updated to {$args[1]}!");
                 break;
             case "mp":
             case "maxplayers":
                 $this->plugin->configManager->setMaxPlayers(intval($args[1]));
-                $sender->sendMessage("§aSlots updated to {$args[1]}");
+                $sender->sendMessage("§aSlots updated to {$args[1]}!");
                 break;
         }
     }

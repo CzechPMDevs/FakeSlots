@@ -1,15 +1,15 @@
 <?php
 
-namespace FakeSlots\Event;
+namespace fakeslots\event;
 
-use FakeSlots\FakeSlots;
+use fakeslots\FakeSlots;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerKickEvent;
 use pocketmine\event\server\QueryRegenerateEvent;
 
 /**
  * Class EventListener
- * @package FakeSlots\Event
+ * @package fakeslots\event
  */
 class EventListener implements Listener {
 

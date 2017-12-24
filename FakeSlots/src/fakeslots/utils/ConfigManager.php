@@ -1,12 +1,14 @@
 <?php
 
-namespace FakeSlots\Data;
+namespace fakeslots\utils;
 
-use FakeSlots\FakeSlots;
+use fakeslots\FakeSlots;
+use pocketmine\Server;
+use pocketmine\utils\Config;
 
 /**
  * Class ConfigManager
- * @package FakeSlots\Data
+ * @package fakeslots\utils
  */
 class ConfigManager {
 
@@ -20,17 +22,29 @@ class ConfigManager {
     public $maxPlayers, $maxOnlinePlayers;
 
     /**
+     * @var bool $force
+     */
+    public $force = false;
+
+    /**
+     * @var Config $serverProperties
+     */
+    private $serverProperties;
+
+    /**
      * ConfigManager constructor.
      * @param FakeSlots $plugin
      */
     public function __construct(FakeSlots $plugin) {
         $this->plugin = $plugin;
         $this->maxPlayers = $this->plugin->getServer()->getQueryInformation()->getPlayerCount();
+        $this->maxOnlinePlayers = $this->plugin->getServer()->getQueryInformation()->getMaxPlayerCount();
+        $this->serverProperties = new Config(Server::getInstance()->getDataPath()."/server.properties", Config::PROPERTIES);
         $this->init();
         $this->reloadData();
     }
 
-    function init() {
+    private function init() {
         if(!is_dir($this->plugin->getDataFolder())) {
             @mkdir($this->plugin->getDataFolder());
         }
@@ -51,11 +65,12 @@ class ConfigManager {
         }
     }
 
-    function reloadData() {
+    private function reloadData() {
         if(is_dir($this->plugin->getDataFolder())) {
             $config = $this->plugin->getConfig();
             $this->maxPlayers = $config->get("maxPlayers");
             $this->maxOnlinePlayers = $config->get("maxOnlinePlayers");
+            $this->force = boolval($config->get("force"));
         }
         else {
             $this->plugin->getLogger()->notice("Cloud not reload data (File not found)");
@@ -75,6 +90,10 @@ class ConfigManager {
      */
     public function setMaxPlayers(int $count) {
         $this->maxPlayers = intval($count);
+        if(!$this->force) {
+            $this->serverProperties->set("max-players", $count);
+            $this->serverProperties->save();
+        }
         $this->plugin->update();
     }
 
