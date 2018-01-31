@@ -18,8 +18,9 @@ class ConfigManager {
     /**
      * @var  int $maxPlayers
      * @var  int $maxOnlinePlayers
+     * @var  int $onlinePlayers
      */
-    public $maxPlayers, $maxOnlinePlayers;
+    public $maxPlayers, $maxOnlinePlayers, $onlinePlayers;
 
     /**
      * @var bool $force
@@ -39,6 +40,7 @@ class ConfigManager {
         $this->plugin = $plugin;
         $this->maxPlayers = $this->plugin->getServer()->getQueryInformation()->getPlayerCount();
         $this->maxOnlinePlayers = $this->plugin->getServer()->getQueryInformation()->getMaxPlayerCount();
+        $this->onlinePlayers = $this->plugin->getServer()->getQueryInformation()->getPlayerCount();
         $this->serverProperties = new Config(Server::getInstance()->getDataPath()."/server.properties", Config::PROPERTIES);
         $this->init();
         $this->reloadData();
@@ -58,6 +60,7 @@ class ConfigManager {
             $config = $this->plugin->getConfig();
             $config->set("maxPlayers", $this->maxPlayers);
             $config->set("maxOnlinePlayers", $this->maxOnlinePlayers);
+            $config->set("onlinePlayers", $this->onlinePlayers);
             $config->save();
         }
         else {
@@ -70,11 +73,17 @@ class ConfigManager {
             $config = $this->plugin->getConfig();
             $this->maxPlayers = $config->get("maxPlayers");
             $this->maxOnlinePlayers = $config->get("maxOnlinePlayers");
+            $this->onlinePlayers = $config->get("onlinePlayers");
             $this->force = boolval($config->get("force"));
         }
         else {
             $this->plugin->getLogger()->notice("Cloud not reload data (File not found)");
         }
+    }
+
+    public function setOnlinePlayers(int $count) {
+        $this->onlinePlayers = intval($count);
+        $this->plugin->update();
     }
 
     /**

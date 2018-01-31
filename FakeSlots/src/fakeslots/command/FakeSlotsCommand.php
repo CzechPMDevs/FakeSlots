@@ -41,8 +41,8 @@ class FakeSlotsCommand extends Command implements PluginIdentifiableCommand {
             return;
         }
 
-        if(empty($args[0]) || $args[0] != null) {
-            $sender->sendMessage("§cUsage: §7/fs <mop|mp> <int: count>");
+        if(empty($args[0]) || empty($args[1])) {
+            $sender->sendMessage("§cUsage: §7/fs <mop|mp|op> <int: count>");
             return;
         }
 
@@ -56,6 +56,10 @@ class FakeSlotsCommand extends Command implements PluginIdentifiableCommand {
             case "maxplayers":
                 $this->plugin->configManager->setMaxPlayers(intval($args[1]));
                 $sender->sendMessage("§aSlots updated to {$args[1]}!");
+                break;
+            case "op":
+                $this->plugin->configManager->setOnlinePlayers(intval($args[1]));
+                $sender->sendMessage("§aOnline players changed to {$args[1]}");
                 break;
         }
     }

@@ -51,9 +51,17 @@ class FakeSlots extends PluginBase {
         return $this->configManager->getMaxOnlinePlayers();
     }
 
+    /**
+     * @return int
+     */
+    public function getOnlinePlayers():int {
+        return $this->configManager->getMaxOnlinePlayers();
+    }
+
     public function update() {
         $query = $this->getServer()->getQueryInformation();
         $query->setMaxPlayerCount($this->getMaxPlayers());
+        #$query->setPlayerCount($this->getOnlinePlayers());
     }
 
     public static function getInstance():FakeSlots {
